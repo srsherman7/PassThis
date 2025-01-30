@@ -54,6 +54,17 @@
                 </Button>
             </StackPanel>
             <TextBox x:Name="idBox" TextWrapping="Wrap" Width="120" AutomationProperties.Name="idBox" Background="{x:Null}" Visibility="Hidden"/>
+            <Grid Height="173">
+                <TextBox x:Name="GenOut" HorizontalAlignment="Left" Margin="125,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" FontWeight="Bold"/>
+                <Button x:Name="GenPassButton" Content="Generate Pass" HorizontalAlignment="Left" Margin="37,148,0,0" VerticalAlignment="Top" Width="83" Click="GenPass" FontWeight="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFBBF7BE"/>
+                            <GradientStop Color="#FF00FF10" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
         </StackPanel>
         <Rectangle x:Name="masterFrame" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="364" Margin="10,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="580" Visibility="Hidden">
             <Rectangle.Fill>

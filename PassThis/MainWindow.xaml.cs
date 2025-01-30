@@ -276,6 +276,32 @@ namespace PasswordManager
                //do nothing, close prompt
             }
         }
+
+        private void GenPass(object sender, RoutedEventArgs e)
+        {
+            int passwordLength = 15;
+            string password = GenerateSecurePassword(passwordLength);
+            GenOut.Text = password;
+        }
+        static string GenerateSecurePassword(int length)
+        {
+            const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
+            char[] password = new char[length];
+            byte[] randomBytes = new byte[length];
+
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = randomBytes[i] % validChars.Length;
+                password[i] = validChars[index];
+            }
+
+            return new string(password);
+        }
     }
 
        
