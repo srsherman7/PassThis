@@ -65,7 +65,7 @@ namespace PasswordManager
                     }
                     else
                     {
-                        ErrorBox.Text = "Wrong password or non exists!";
+                        ErrorBox.Text = "Wrong password or none exists!";
                     }
 
 
