@@ -17,7 +17,8 @@ namespace PasswordManager
 
         public MainWindow()
         {
-
+            InitializeComponent();
+            InitializeDatabase();
             InitializeMasterTable();
             checkMaster();            
             
@@ -28,15 +29,19 @@ namespace PasswordManager
             {
                 connection.Open();
                 string query = "SELECT COUNT(*) FROM MasterPass";
-                using (var command = new SQLiteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
-                 
-                if (reader.StepCount == 0)                    
+                var command = new SQLiteCommand(query, connection);
+                int count = Convert.ToInt32(command.ExecuteScalar()) ;
+                if (count == 0)                    
                     {
-                        MasterCreate.Visibility = Visibility.Visible;
-                        ErrorBox.Text = "Please Create a Master Password.";
+                    CreateMasterButton.Visibility = Visibility.Visible;
+                    ErrorBox.Text = "Please Create a Master Password.";
                     }
-                    
+                else
+                {
+                    CreateMasterButton.Visibility = Visibility.Hidden;
+                    resetMasterPassButton.Visibility = Visibility.Visible;
+                }
+
 
 
             }
@@ -48,13 +53,13 @@ namespace PasswordManager
             {
                 connection.Open();
                 string query = "SELECT Mpassword FROM MasterPass";
-                using (var command = new SQLiteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
-                    if (MasterPassText.Password == Decrypt(reader["Mpassword"].ToString()))
+                var command = new SQLiteCommand(query, connection);
+                var reader = command.ExecuteReader();
+                reader.Read();
+                string decPass = Decrypt(reader["Mpassword"].ToString());
+                    if (MasterPassText.Password == decPass)
                     {
-                        LockPanel.Visibility = Visibility.Hidden;
-                        InitializeDatabase();
-                        InitializeComponent();
+                        LockPanel.Visibility = Visibility.Hidden;                                             
                         LoadSites();
                         SitesListBox.ItemsSource = Sites;
                     }
@@ -241,11 +246,37 @@ namespace PasswordManager
                     command.ExecuteNonQuery();
                 }
                 ErrorBox.Text = "Master Password Created.";
-                MasterCreate.Visibility = Visibility.Hidden;
+                CreateMasterButton.Visibility = Visibility.Hidden;
+                resetMasterPassButton.Visibility = Visibility.Visible;
             }
 
         }
+
+        private void resetMasterPass(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult Result = MessageBox.Show("Are you sure you want to reset the Master Password with the password in the input?", "Reset Master Pass?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (Result == MessageBoxResult.Yes)
+            {
+                string password = Encrypt(MasterPassText.Password);
+                using (var connection = new SQLiteConnection(ConnectionString))
+                {
+                    connection.Open();
+                    string insertQuery = "UPDATE MasterPass SET Mpassword = @password";
+                    using (var command = new SQLiteCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@password", password);
+                        command.ExecuteNonQuery();
+                    }
+                    ErrorBox.Text = "Master Password Reset.";
+                }
+
+                }
+            else if (Result == MessageBoxResult.No)
+            {
+               //do nothing, close prompt
+            }
         }
+    }
 
        
     }
