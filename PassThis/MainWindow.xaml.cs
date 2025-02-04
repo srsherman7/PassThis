@@ -13,7 +13,7 @@ namespace PasswordManager
     public partial class MainWindow : Window
     {
         private const string ConnectionString = "Data Source=passwords.db;Version=3;";
-        private const string EncryptionKey = "ENCKEYHERE"; //replace with your key
+        private const string EncryptionKey = "PUTKEYHERE"; //change this to your own key
         public ObservableCollection<string> Sites { get; set; } = new ObservableCollection<string>();
 
         public MainWindow()

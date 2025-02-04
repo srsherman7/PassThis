@@ -98,7 +98,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <TextBox x:Name="ErrorBox" HorizontalAlignment="Left" Margin="187,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202" Background="{x:Null}" Foreground="#FFB70000" FontWeight="Bold" Height="44" FontSize="16" BorderBrush="{x:Null}"/>
+            <TextBox x:Name="ErrorBox" HorizontalAlignment="Left" Margin="148,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Background="#7FFFFFFF" Foreground="#FFB70000" FontWeight="Bold" Height="44" FontSize="16" BorderBrush="Black"/>
             <Button x:Name="resetMasterPassButton" Content="Reset" HorizontalAlignment="Left" Margin="198,138,0,0" VerticalAlignment="Top" Width="85" FontWeight="Bold" Height="26" Click="resetMasterPass" Visibility="Hidden">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
