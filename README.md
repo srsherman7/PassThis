@@ -3,7 +3,7 @@ The key used to encrypt/decrypt is application specific and can be changed in th
 As of right now it's a simple store encrypted. decrypt when called and copy to clipboard workflow. I am researching adding shortcut keys for future builds.
 
 Build package
-[https://github.com/srsherman7/PassThis/blob/master/PassThis.7z](https://github.com/srsherman7/PassThis/blob/master/PassThisBuild.zip)
+https://github.com/srsherman7/PassThis/blob/e1da9224f0bbac181d79a952ff28ab2e564aaf19/PassThisBuild.zip
 
 ![image](https://github.com/user-attachments/assets/978e76b3-2eb7-4bae-9191-4c8f9a1c748f)
 
