@@ -3,6 +3,7 @@ The key used to encrypt/decrypt is application specific and can be changed in th
 As of right now it's a simple store encrypted. decrypt when called and copy to clipboard workflow. I am researching adding shortcut keys for future builds.
 
 Some roadblocks to overcome were:
+
 • Database locking - Updated Journal mode to WAL (Write Ahead Logging) which resolved those issues. 
 • Connections staying open - moved close() command within the if/else blocks so it would execute based on logic flow.
 • Error Handling - Created an errorhandling class and wrapped sqlite operations using a delgate for use as a global try/catch handler.
