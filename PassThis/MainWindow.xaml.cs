@@ -7,13 +7,14 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Security.Policy;
 using PassThis;
+using System.Xml.Serialization;
 
 namespace PasswordManager
 {
     public partial class MainWindow : Window
     {
         private const string ConnectionString = "Data Source=passwords.db;Version=3;";
-        private const string EncryptionKey = "PUTKEYHERE"; //change this to your own key
+        private const string EncryptionKey = "m4dwDxiTXM8KoYPA"; //change this to your own key
         public ObservableCollection<string> Sites { get; set; } = new ObservableCollection<string>();
 
         public MainWindow()
@@ -21,8 +22,25 @@ namespace PasswordManager
             InitializeComponent();
             ExceptionHandler.ExecuteWithHandling(() => InitializeDatabase());
             ExceptionHandler.ExecuteWithHandling(() => InitializeMasterTable());
-            ExceptionHandler.ExecuteWithHandling(() => checkMaster());            
-            
+            ExceptionHandler.ExecuteWithHandling(() => checkMaster());
+            ExceptionHandler.ExecuteWithHandling(() => SetJournalMode());
+        }
+
+        private void SetJournalMode()
+        {
+            ExceptionHandler.ExecuteWithHandling(() =>
+            {
+                using (var connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand("PRAGMA journal_mode=WAL;", connection))
+                {
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+
+            }
+            });
         }
         private void checkMaster()
         {
@@ -39,7 +57,6 @@ namespace PasswordManager
                     {
                         CreateMasterButton.Visibility = Visibility.Visible;
                         MasterLogin.Visibility = Visibility.Hidden;
-                        //ErrorBox.Text = "Please Create a Master Password.";
                         MessageBox.Show("Please create a master password", "Prompt", MessageBoxButton.OK, MessageBoxImage.Information);
                         connection.Close();
 
@@ -78,7 +95,7 @@ namespace PasswordManager
                     }
                     else
                     {
-                        ErrorBox.Text = "Wrong password or non exists!";
+                        MessageBox.Show("Wrong password or non exists!");
                         connection.Close();
                     }
                 
@@ -291,7 +308,7 @@ namespace PasswordManager
                     command.ExecuteNonQuery();
                     connection.Close();
                     }
-                ErrorBox.Text = "Master Password Created.";
+                    MessageBox.Show("Master Password Created.");
                 CreateMasterButton.Visibility = Visibility.Hidden;
                 resetMasterPassButton.Visibility = Visibility.Visible;
                 MasterLogin.Visibility = Visibility.Visible;
@@ -322,9 +339,9 @@ namespace PasswordManager
                         command.ExecuteNonQuery();
                         connection.Close();
                         }
-                    
-                    
-                    ErrorBox.Text = "Master Password Reset.";
+
+
+                        MessageBox.Show("Master Password Reset."); 
                 }
                 });
 
