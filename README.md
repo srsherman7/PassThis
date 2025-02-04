@@ -1,3 +1,7 @@
+A lite password manager project I built. It's a C# .net / WPF / SQLite stack. It uses AES 128 bit encryption to store the Master password as well as the other passwords encrypted within the database.
+The key used to encrypt/decrypt is application specific and can be changed in the source code here | https://github.com/srsherman7/PassThis/blob/cf078d26d12cee757adaff870b940fd1194e771f/PassThis/MainWindow.xaml.cs#L16
+As of right now it's a simple store encrypted. decrypt when called and copy to clipboard workflow. I am researching adding shortcut keys for future builds.
+
 Build package
 [https://github.com/srsherman7/PassThis/blob/master/PassThis.7z](https://github.com/srsherman7/PassThis/blob/master/PassThisBuild.zip)
 
